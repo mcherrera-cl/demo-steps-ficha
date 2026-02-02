@@ -25,6 +25,7 @@
             background-color: #f5f7fa;
             color: #333;
             line-height: 1.6;
+            min-height: 100vh;
         }
         
         .container {
@@ -38,7 +39,7 @@
         header {
             text-align: center;
             background-color: white;
-            padding: 25px;
+            padding: 25px 20px;
             border-radius: 10px;
             box-shadow: var(--shadow);
         }
@@ -46,19 +47,22 @@
         h1 {
             color: var(--primary-color);
             margin-bottom: 10px;
-            font-size: 2.2rem;
+            font-size: clamp(1.8rem, 5vw, 2.2rem);
         }
         
         .subtitle {
             color: #7f8c8d;
-            font-size: 1.1rem;
+            font-size: clamp(1rem, 3vw, 1.1rem);
+            max-width: 800px;
+            margin: 0 auto;
         }
         
         .progress-container {
             background-color: white;
             border-radius: 10px;
-            padding: 25px;
+            padding: 25px 20px;
             box-shadow: var(--shadow);
+            width: 100%;
         }
         
         .progress-bar {
@@ -66,7 +70,8 @@
             background-color: #e0e0e0;
             border-radius: 6px;
             overflow: hidden;
-            margin-bottom: 15px;
+            margin-bottom: 20px;
+            width: 100%;
         }
         
         .progress {
@@ -81,14 +86,32 @@
             justify-content: space-between;
             margin-bottom: 30px;
             flex-wrap: wrap;
+            gap: 10px;
+            width: 100%;
         }
         
         .step {
             text-align: center;
             flex: 1;
-            min-width: 100px;
+            min-width: 70px;
             position: relative;
             padding-top: 25px;
+        }
+        
+        /* Línea conectadora entre pasos */
+        .step:not(:last-child)::after {
+            content: '';
+            position: absolute;
+            top: 20px;
+            left: 60%;
+            right: -40%;
+            height: 2px;
+            background-color: #e0e0e0;
+            z-index: 1;
+        }
+        
+        .step.completed:not(:last-child)::after {
+            background-color: var(--success-color);
         }
         
         .step-number {
@@ -119,8 +142,10 @@
         }
         
         .step-name {
-            font-size: 0.9rem;
+            font-size: clamp(0.75rem, 2vw, 0.9rem);
             color: #7f8c8d;
+            word-break: break-word;
+            line-height: 1.3;
         }
         
         .step.active .step-name {
@@ -132,14 +157,16 @@
             display: flex;
             flex-direction: row;
             gap: 30px;
+            width: 100%;
         }
         
         .form-container {
             flex: 2;
             background-color: white;
             border-radius: 10px;
-            padding: 30px;
+            padding: 25px 20px;
             box-shadow: var(--shadow);
+            min-width: 0; /* Para evitar desbordamiento en flex */
         }
         
         .step-content {
@@ -162,10 +189,12 @@
             margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 2px solid var(--light-color);
+            font-size: clamp(1.4rem, 4vw, 1.6rem);
         }
         
         .form-group {
             margin-bottom: 25px;
+            width: 100%;
         }
         
         label {
@@ -173,6 +202,7 @@
             margin-bottom: 8px;
             font-weight: 600;
             color: #555;
+            font-size: clamp(0.9rem, 2vw, 1rem);
         }
         
         input, select, textarea {
@@ -180,7 +210,7 @@
             padding: 12px 15px;
             border: 2px solid #ddd;
             border-radius: 6px;
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 2vw, 1rem);
             transition: border-color 0.3s;
         }
         
@@ -204,10 +234,17 @@
             display: flex;
             align-items: center;
             gap: 8px;
+            min-width: 120px;
         }
         
         .checkbox-item input {
             width: auto;
+            min-width: 18px;
+        }
+        
+        .checkbox-item label {
+            margin-bottom: 0;
+            white-space: nowrap;
         }
         
         .tip-box {
@@ -215,7 +252,7 @@
             border-left: 4px solid var(--secondary-color);
             padding: 15px;
             margin-top: 10px;
-            font-size: 0.9rem;
+            font-size: clamp(0.85rem, 2vw, 0.9rem);
             border-radius: 0 6px 6px 0;
         }
         
@@ -227,16 +264,21 @@
             display: flex;
             justify-content: space-between;
             margin-top: 40px;
+            width: 100%;
+            gap: 15px;
         }
         
         .btn {
-            padding: 12px 30px;
+            padding: clamp(10px, 3vw, 12px) clamp(20px, 4vw, 30px);
             border: none;
             border-radius: 6px;
-            font-size: 1rem;
+            font-size: clamp(0.9rem, 2vw, 1rem);
             font-weight: 600;
             cursor: pointer;
             transition: all 0.3s;
+            flex: 1;
+            text-align: center;
+            min-width: 120px;
         }
         
         .btn-prev {
@@ -269,15 +311,17 @@
         .btn:disabled {
             background-color: #bdc3c7;
             cursor: not-allowed;
+            opacity: 0.6;
         }
         
         .sidebar {
             flex: 1;
             background-color: white;
             border-radius: 10px;
-            padding: 25px;
+            padding: 25px 20px;
             box-shadow: var(--shadow);
             height: fit-content;
+            min-width: 250px;
         }
         
         .sidebar h3 {
@@ -286,11 +330,13 @@
             margin-bottom: 20px;
             padding-bottom: 10px;
             border-bottom: 1px solid var(--light-color);
+            font-size: clamp(1.1rem, 3vw, 1.3rem);
         }
         
         .document-list {
             list-style-type: none;
             padding: 0;
+            margin: 0;
         }
         
         .document-list li {
@@ -299,10 +345,12 @@
             display: flex;
             align-items: center;
             gap: 10px;
+            font-size: clamp(0.85rem, 2vw, 0.9rem);
         }
         
         .document-list li:before {
             content: "📄";
+            font-size: 0.9em;
         }
         
         .warning-box {
@@ -311,7 +359,7 @@
             border-radius: 6px;
             padding: 15px;
             margin-top: 20px;
-            font-size: 0.9rem;
+            font-size: clamp(0.85rem, 2vw, 0.9rem);
         }
         
         .warning-box strong {
@@ -320,7 +368,7 @@
         
         .completion-screen {
             text-align: center;
-            padding: 50px 30px;
+            padding: clamp(30px, 5vw, 50px) clamp(15px, 3vw, 30px);
             display: none;
         }
         
@@ -330,27 +378,202 @@
         }
         
         .completion-icon {
-            font-size: 5rem;
+            font-size: clamp(3rem, 10vw, 5rem);
             margin-bottom: 20px;
             color: var(--success-color);
         }
         
-        @media (max-width: 768px) {
+        .summary {
+            background-color: #f8f9fa;
+            border-radius: 8px;
+            padding: 20px;
+            margin-bottom: 25px;
+        }
+        
+        .summary h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 15px;
+        }
+        
+        /* Mejoras específicas para móviles */
+        @media (max-width: 992px) {
             .content-container {
                 flex-direction: column;
             }
             
+            .sidebar {
+                min-width: 100%;
+                order: -1;
+            }
+            
+            .step:not(:last-child)::after {
+                display: none;
+            }
+            
             .step-indicator {
-                gap: 10px;
+                justify-content: space-around;
             }
             
             .step {
-                min-width: 80px;
+                flex: 0 0 calc(33.333% - 10px);
+                margin-bottom: 10px;
+            }
+        }
+        
+        @media (max-width: 768px) {
+            body {
+                padding: 15px 10px;
             }
             
-            .step-name {
-                font-size: 0.8rem;
+            .container {
+                gap: 20px;
             }
+            
+            .progress-container,
+            .form-container,
+            .sidebar {
+                padding: 20px 15px;
+            }
+            
+            .step {
+                flex: 0 0 calc(50% - 10px);
+                min-width: 60px;
+            }
+            
+            .step-number {
+                width: 35px;
+                height: 35px;
+                font-size: 0.9rem;
+            }
+            
+            .checkbox-group {
+                flex-direction: column;
+                gap: 10px;
+            }
+            
+            .checkbox-item {
+                min-width: auto;
+            }
+            
+            .navigation-buttons {
+                flex-direction: column;
+            }
+            
+            .btn {
+                width: 100%;
+            }
+        }
+        
+        @media (max-width: 480px) {
+            body {
+                padding: 10px 5px;
+            }
+            
+            header {
+                padding: 20px 15px;
+            }
+            
+            .progress-container,
+            .form-container,
+            .sidebar {
+                padding: 15px 10px;
+            }
+            
+            .step {
+                flex: 0 0 100%;
+                min-width: auto;
+            }
+            
+            .step-indicator {
+                flex-direction: column;
+                align-items: center;
+                gap: 15px;
+            }
+            
+            .step:not(:last-child)::after {
+                display: block;
+                top: 35px;
+                left: 50%;
+                right: 50%;
+                width: 0;
+                height: 20px;
+                border-left: 2px solid #e0e0e0;
+                background: none;
+            }
+            
+            .step.completed:not(:last-child)::after {
+                border-left-color: var(--success-color);
+                background: none;
+            }
+            
+            h2 {
+                font-size: 1.3rem;
+            }
+            
+            .form-group {
+                margin-bottom: 20px;
+            }
+            
+            input, select, textarea {
+                padding: 10px 12px;
+            }
+        }
+        
+        /* Para tablets en modo vertical */
+        @media (min-width: 481px) and (max-width: 768px) {
+            .step-indicator {
+                gap: 5px;
+            }
+            
+            .step {
+                flex: 0 0 calc(20% - 5px);
+            }
+        }
+        
+        /* Para orientación landscape en móviles */
+        @media (max-height: 600px) and (orientation: landscape) {
+            .step-indicator {
+                margin-bottom: 15px;
+            }
+            
+            .step {
+                padding-top: 15px;
+            }
+            
+            .step-number {
+                width: 30px;
+                height: 30px;
+                font-size: 0.8rem;
+                margin-bottom: 5px;
+            }
+            
+            .form-group {
+                margin-bottom: 15px;
+            }
+            
+            .navigation-buttons {
+                margin-top: 20px;
+            }
+        }
+        
+        /* Mejora para pantallas muy grandes */
+        @media (min-width: 1400px) {
+            .container {
+                max-width: 1400px;
+            }
+        }
+        
+        /* Asegurar que los selects sean legibles en móviles */
+        select {
+            -webkit-appearance: none;
+            -moz-appearance: none;
+            appearance: none;
+            background-image: url("data:image/svg+xml;charset=UTF-8,%3csvg xmlns='http://www.w3.org/2000/svg' viewBox='0 0 24 24' fill='none' stroke='currentColor' stroke-width='2' stroke-linecap='round' stroke-linejoin='round'%3e%3cpolyline points='6 9 12 15 18 9'%3e%3c/polyline%3e%3c/svg%3e");
+            background-repeat: no-repeat;
+            background-position: right 15px center;
+            background-size: 1em;
+            padding-right: 40px;
         }
     </style>
 </head>
@@ -620,7 +843,7 @@
                         <h2>¡Ficha Completada Exitosamente!</h2>
                         <p>Tu ficha de arriendo ha sido generada correctamente. Recibirás una copia en tu correo electrónico en los próximos minutos.</p>
                         <p><strong>Próximos pasos:</strong></p>
-                        <ol style="text-align: left; max-width: 500px; margin: 20px auto;">
+                        <ol style="text-align: left; max-width: 500px; margin: 20px auto; padding-left: 20px;">
                             <li>Revisa tu correo electrónico para confirmar la recepción</li>
                             <li>Imprime la ficha y el contrato adjunto</li>
                             <li>Coordina una reunión con el arrendador para firmar</li>
@@ -655,7 +878,7 @@
                     
                     <h3 style="margin-top: 30px;">Progreso Actual</h3>
                     <div style="text-align: center;">
-                        <div style="font-size: 2rem; font-weight: bold; color: var(--secondary-color);" id="progress-percentage">10%</div>
+                        <div style="font-size: clamp(1.5rem, 4vw, 2rem); font-weight: bold; color: var(--secondary-color);" id="progress-percentage">10%</div>
                         <div>Completado</div>
                     </div>
                 </div>
@@ -683,7 +906,25 @@
             updateProgress();
             setupEventListeners();
             updateStepIndicators();
+            adjustStepConnectors();
+            
+            // Ajustar conectores en redimensionamiento
+            window.addEventListener('resize', adjustStepConnectors);
         });
+        
+        // Ajustar conectores entre pasos según ancho de pantalla
+        function adjustStepConnectors() {
+            const steps = document.querySelectorAll('.step');
+            const isMobile = window.innerWidth <= 480;
+            
+            steps.forEach((step, index) => {
+                const connector = step.querySelector('.step::after');
+                if (isMobile && index < steps.length - 1) {
+                    // Para móviles en modo vertical
+                    step.style.position = 'relative';
+                }
+            });
+        }
         
         // Configurar event listeners
         function setupEventListeners() {
@@ -695,6 +936,19 @@
             document.getElementById('rut-arrendatario').addEventListener('blur', validateRUT);
             document.getElementById('email-arrendatario').addEventListener('blur', validateEmail);
             document.getElementById('renta-mensual').addEventListener('blur', updateGarantia);
+            
+            // Mejorar UX en móviles para selects
+            const selects = document.querySelectorAll('select');
+            selects.forEach(select => {
+                select.addEventListener('focus', function() {
+                    if (window.innerWidth <= 768) {
+                        // Desplazar para que el select sea visible al abrir
+                        setTimeout(() => {
+                            this.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                        }, 300);
+                    }
+                });
+            });
         }
         
         // Navegación entre pasos
@@ -727,6 +981,11 @@
                     if (currentStep === totalSteps) {
                         generateSummary();
                     }
+                    
+                    // En móviles, desplazar hacia arriba al cambiar de paso
+                    if (window.innerWidth <= 768) {
+                        window.scrollTo({ top: 0, behavior: 'smooth' });
+                    }
                 }
             } else {
                 // Estamos en el último paso, finalizar
@@ -757,6 +1016,11 @@
                 // Deshabilitar botón anterior si estamos en el primer paso
                 if (currentStep === 1) {
                     btnPrev.disabled = true;
+                }
+                
+                // En móviles, desplazar hacia arriba al cambiar de paso
+                if (window.innerWidth <= 768) {
+                    window.scrollTo({ top: 0, behavior: 'smooth' });
                 }
             }
         }
@@ -811,7 +1075,7 @@
                     });
                     
                     if (!isValid) {
-                        alert('Por favor, completa todos los campos obligatorios marcados con *');
+                        showMobileAlert('Por favor, completa todos los campos obligatorios marcados con *');
                     }
                     break;
                     
@@ -824,7 +1088,7 @@
                         isValid = false;
                         if (!direccion.value.trim()) highlightInvalidField(direccion);
                         if (!tipoInmueble.value) highlightInvalidField(tipoInmueble);
-                        alert('Por favor, completa la dirección y selecciona el tipo de inmueble');
+                        showMobileAlert('Por favor, completa la dirección y selecciona el tipo de inmueble');
                     }
                     break;
                     
@@ -839,7 +1103,7 @@
                         if (!fechaInicio.value) highlightInvalidField(fechaInicio);
                         if (!duracionContrato.value) highlightInvalidField(duracionContrato);
                         if (!rentaMensual.value) highlightInvalidField(rentaMensual);
-                        alert('Por favor, completa la fecha de inicio, duración del contrato y renta mensual');
+                        showMobileAlert('Por favor, completa la fecha de inicio, duración del contrato y renta mensual');
                     }
                     break;
                     
@@ -849,7 +1113,7 @@
                     if (!tipoGarantia.value) {
                         isValid = false;
                         highlightInvalidField(tipoGarantia);
-                        alert('Por favor, selecciona un tipo de garantía');
+                        showMobileAlert('Por favor, selecciona un tipo de garantía');
                     }
                     break;
             }
@@ -857,10 +1121,62 @@
             return isValid;
         }
         
+        // Mostrar alerta optimizada para móviles
+        function showMobileAlert(message) {
+            if (window.innerWidth <= 768) {
+                // Crear alerta personalizada para móviles
+                const alertDiv = document.createElement('div');
+                alertDiv.style.cssText = `
+                    position: fixed;
+                    top: 20px;
+                    left: 50%;
+                    transform: translateX(-50%);
+                    background-color: var(--accent-color);
+                    color: white;
+                    padding: 15px 20px;
+                    border-radius: 8px;
+                    z-index: 1000;
+                    max-width: 90%;
+                    text-align: center;
+                    box-shadow: 0 4px 12px rgba(0,0,0,0.2);
+                    animation: slideDown 0.3s ease;
+                `;
+                
+                const style = document.createElement('style');
+                style.textContent = `
+                    @keyframes slideDown {
+                        from { top: -100px; opacity: 0; }
+                        to { top: 20px; opacity: 1; }
+                    }
+                `;
+                document.head.appendChild(style);
+                
+                alertDiv.textContent = message;
+                document.body.appendChild(alertDiv);
+                
+                setTimeout(() => {
+                    alertDiv.style.animation = 'slideUp 0.3s ease';
+                    setTimeout(() => {
+                        document.body.removeChild(alertDiv);
+                        document.head.removeChild(style);
+                    }, 300);
+                }, 3000);
+            } else {
+                alert(message);
+            }
+        }
+        
         // Resaltar campo inválido
         function highlightInvalidField(field) {
             field.style.borderColor = 'var(--accent-color)';
             field.style.backgroundColor = '#fff0f0';
+            
+            // En móviles, desplazar al campo con error
+            if (window.innerWidth <= 768) {
+                setTimeout(() => {
+                    field.scrollIntoView({ behavior: 'smooth', block: 'center' });
+                }, 100);
+            }
         }
         
         // Quitar resaltado de campo
@@ -878,7 +1194,7 @@
             
             if (rut && !rutRegex.test(rut)) {
                 highlightInvalidField(rutField);
-                alert('Por favor, ingresa un RUT válido en formato: 12.345.678-9');
+                showMobileAlert('Por favor, ingresa un RUT válido en formato: 12.345.678-9');
                 return false;
             } else {
                 removeHighlight(rutField);
@@ -894,7 +1210,7 @@
             
             if (email && !emailRegex.test(email)) {
                 highlightInvalidField(emailField);
-                alert('Por favor, ingresa un correo electrónico válido');
+                showMobileAlert('Por favor, ingresa un correo electrónico válido');
                 return false;
             } else {
                 removeHighlight(emailField);
@@ -933,7 +1249,11 @@
                 {id: 'observaciones', label: 'Observaciones'}
             ];
             
-            let summaryHTML = '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">';
+            // Para móviles, usar una sola columna
+            const isMobile = window.innerWidth <= 768;
+            const gridColumns = isMobile ? '1fr' : '1fr 1fr';
+            
+            let summaryHTML = `<div style="display: grid; grid-template-columns: ${gridColumns}; gap: 15px;">`;
             
             fields.forEach(field => {
                 const element = document.getElementById(field.id);
@@ -950,8 +1270,11 @@
                     value = element.value || 'No especificado';
                 }
                 
+                // Para móviles, cada campo ocupa toda la fila
+                const gridSpan = isMobile ? 'span 2' : '';
+                
                 summaryHTML += `
-                    <div style="padding: 8px; background-color: #f8f9fa; border-radius: 4px;">
+                    <div style="padding: 8px; background-color: #f8f9fa; border-radius: 4px; ${gridSpan ? 'grid-column: ' + gridSpan + ';' : ''}">
                         <strong>${field.label}:</strong><br>
                         ${value}
                     </div>
@@ -965,8 +1288,10 @@
             if (document.getElementById('amoblado').checked) caracteristicas.push('Amoblado');
             if (document.getElementById('mascotas').checked) caracteristicas.push('Permite mascotas');
             
+            const caracteristicasSpan = isMobile ? 'span 2' : 'span 2';
+            
             summaryHTML += `
-                <div style="padding: 8px; background-color: #f8f9fa; border-radius: 4px; grid-column: span 2;">
+                <div style="padding: 8px; background-color: #f8f9fa; border-radius: 4px; grid-column: ${caracteristicasSpan};">
                     <strong>Características del Inmueble:</strong><br>
                     ${caracteristicas.length > 0 ? caracteristicas.join(', ') : 'Ninguna seleccionada'}
                 </div>
@@ -974,6 +1299,11 @@
             
             summaryHTML += '</div>';
             summaryContent.innerHTML = summaryHTML;
+            
+            // Ajustar el resumen si hay cambio de tamaño
+            window.addEventListener('resize', function() {
+                generateSummary();
+            });
         }
         
         // Finalizar formulario
@@ -983,7 +1313,7 @@
             const terminosCondiciones = document.getElementById('terminos-condiciones');
             
             if (!confirmacionDatos.checked || !terminosCondiciones.checked) {
-                alert('Debes confirmar que los datos son correctos y aceptar los términos y condiciones para finalizar.');
+                showMobileAlert('Debes confirmar que los datos son correctos y aceptar los términos y condiciones para finalizar.');
                 return;
             }
             
@@ -1003,6 +1333,11 @@
             // Actualizar barra de progreso al 100%
             progressBar.style.width = '100%';
             progressPercentage.textContent = '100%';
+            
+            // En móviles, desplazar hacia arriba
+            if (window.innerWidth <= 768) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
         
         // Reiniciar formulario
@@ -1042,6 +1377,11 @@
             // Restablecer indicadores de paso
             updateStepIndicators();
             updateProgress();
+            
+            // En móviles, desplazar hacia arriba
+            if (window.innerWidth <= 768) {
+                window.scrollTo({ top: 0, behavior: 'smooth' });
+            }
         }
     </script>
 </body>
