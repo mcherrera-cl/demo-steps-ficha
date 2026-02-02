@@ -1,0 +1,1048 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Guía para Llenar Ficha de Arriendo</title>
+    <style>
+        :root {
+            --primary-color: #2c3e50;
+            --secondary-color: #3498db;
+            --accent-color: #e74c3c;
+            --light-color: #ecf0f1;
+            --success-color: #27ae60;
+            --shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        }
+        
+        * {
+            box-sizing: border-box;
+            font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+        }
+        
+        body {
+            margin: 0;
+            padding: 20px;
+            background-color: #f5f7fa;
+            color: #333;
+            line-height: 1.6;
+        }
+        
+        .container {
+            max-width: 1200px;
+            margin: 0 auto;
+            display: flex;
+            flex-direction: column;
+            gap: 30px;
+        }
+        
+        header {
+            text-align: center;
+            background-color: white;
+            padding: 25px;
+            border-radius: 10px;
+            box-shadow: var(--shadow);
+        }
+        
+        h1 {
+            color: var(--primary-color);
+            margin-bottom: 10px;
+            font-size: 2.2rem;
+        }
+        
+        .subtitle {
+            color: #7f8c8d;
+            font-size: 1.1rem;
+        }
+        
+        .progress-container {
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+        }
+        
+        .progress-bar {
+            height: 12px;
+            background-color: #e0e0e0;
+            border-radius: 6px;
+            overflow: hidden;
+            margin-bottom: 15px;
+        }
+        
+        .progress {
+            height: 100%;
+            background-color: var(--success-color);
+            width: 10%;
+            transition: width 0.5s ease;
+        }
+        
+        .step-indicator {
+            display: flex;
+            justify-content: space-between;
+            margin-bottom: 30px;
+            flex-wrap: wrap;
+        }
+        
+        .step {
+            text-align: center;
+            flex: 1;
+            min-width: 100px;
+            position: relative;
+            padding-top: 25px;
+        }
+        
+        .step-number {
+            width: 40px;
+            height: 40px;
+            background-color: #e0e0e0;
+            color: #666;
+            border-radius: 50%;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            margin: 0 auto 10px;
+            font-weight: bold;
+            transition: all 0.3s ease;
+            z-index: 2;
+            position: relative;
+        }
+        
+        .step.active .step-number {
+            background-color: var(--secondary-color);
+            color: white;
+            transform: scale(1.1);
+        }
+        
+        .step.completed .step-number {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .step-name {
+            font-size: 0.9rem;
+            color: #7f8c8d;
+        }
+        
+        .step.active .step-name {
+            color: var(--primary-color);
+            font-weight: bold;
+        }
+        
+        .content-container {
+            display: flex;
+            flex-direction: row;
+            gap: 30px;
+        }
+        
+        .form-container {
+            flex: 2;
+            background-color: white;
+            border-radius: 10px;
+            padding: 30px;
+            box-shadow: var(--shadow);
+        }
+        
+        .step-content {
+            display: none;
+            animation: fadeIn 0.5s;
+        }
+        
+        .step-content.active {
+            display: block;
+        }
+        
+        @keyframes fadeIn {
+            from { opacity: 0; }
+            to { opacity: 1; }
+        }
+        
+        h2 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 2px solid var(--light-color);
+        }
+        
+        .form-group {
+            margin-bottom: 25px;
+        }
+        
+        label {
+            display: block;
+            margin-bottom: 8px;
+            font-weight: 600;
+            color: #555;
+        }
+        
+        input, select, textarea {
+            width: 100%;
+            padding: 12px 15px;
+            border: 2px solid #ddd;
+            border-radius: 6px;
+            font-size: 1rem;
+            transition: border-color 0.3s;
+        }
+        
+        input:focus, select:focus, textarea:focus {
+            border-color: var(--secondary-color);
+            outline: none;
+        }
+        
+        .required::after {
+            content: " *";
+            color: var(--accent-color);
+        }
+        
+        .checkbox-group {
+            display: flex;
+            flex-wrap: wrap;
+            gap: 15px;
+        }
+        
+        .checkbox-item {
+            display: flex;
+            align-items: center;
+            gap: 8px;
+        }
+        
+        .checkbox-item input {
+            width: auto;
+        }
+        
+        .tip-box {
+            background-color: #f8f9fa;
+            border-left: 4px solid var(--secondary-color);
+            padding: 15px;
+            margin-top: 10px;
+            font-size: 0.9rem;
+            border-radius: 0 6px 6px 0;
+        }
+        
+        .tip-box strong {
+            color: var(--secondary-color);
+        }
+        
+        .navigation-buttons {
+            display: flex;
+            justify-content: space-between;
+            margin-top: 40px;
+        }
+        
+        .btn {
+            padding: 12px 30px;
+            border: none;
+            border-radius: 6px;
+            font-size: 1rem;
+            font-weight: 600;
+            cursor: pointer;
+            transition: all 0.3s;
+        }
+        
+        .btn-prev {
+            background-color: #ecf0f1;
+            color: var(--primary-color);
+        }
+        
+        .btn-prev:hover {
+            background-color: #d5dbdd;
+        }
+        
+        .btn-next {
+            background-color: var(--secondary-color);
+            color: white;
+        }
+        
+        .btn-next:hover {
+            background-color: #2980b9;
+        }
+        
+        .btn-finish {
+            background-color: var(--success-color);
+            color: white;
+        }
+        
+        .btn-finish:hover {
+            background-color: #219653;
+        }
+        
+        .btn:disabled {
+            background-color: #bdc3c7;
+            cursor: not-allowed;
+        }
+        
+        .sidebar {
+            flex: 1;
+            background-color: white;
+            border-radius: 10px;
+            padding: 25px;
+            box-shadow: var(--shadow);
+            height: fit-content;
+        }
+        
+        .sidebar h3 {
+            color: var(--primary-color);
+            margin-top: 0;
+            margin-bottom: 20px;
+            padding-bottom: 10px;
+            border-bottom: 1px solid var(--light-color);
+        }
+        
+        .document-list {
+            list-style-type: none;
+            padding: 0;
+        }
+        
+        .document-list li {
+            padding: 10px 0;
+            border-bottom: 1px dashed #eee;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        
+        .document-list li:before {
+            content: "📄";
+        }
+        
+        .warning-box {
+            background-color: #fff8e1;
+            border: 1px solid #ffd54f;
+            border-radius: 6px;
+            padding: 15px;
+            margin-top: 20px;
+            font-size: 0.9rem;
+        }
+        
+        .warning-box strong {
+            color: #f57c00;
+        }
+        
+        .completion-screen {
+            text-align: center;
+            padding: 50px 30px;
+            display: none;
+        }
+        
+        .completion-screen.active {
+            display: block;
+            animation: fadeIn 0.8s;
+        }
+        
+        .completion-icon {
+            font-size: 5rem;
+            margin-bottom: 20px;
+            color: var(--success-color);
+        }
+        
+        @media (max-width: 768px) {
+            .content-container {
+                flex-direction: column;
+            }
+            
+            .step-indicator {
+                gap: 10px;
+            }
+            
+            .step {
+                min-width: 80px;
+            }
+            
+            .step-name {
+                font-size: 0.8rem;
+            }
+        }
+    </style>
+</head>
+<body>
+    <div class="container">
+        <header>
+            <h1>Guía para Completar Ficha de Arriendo</h1>
+            <p class="subtitle">Sigue estos pasos para completar correctamente tu ficha de arriendo. Te guiaremos en cada paso del proceso.</p>
+        </header>
+        
+        <div class="progress-container">
+            <div class="progress-bar">
+                <div class="progress" id="progress-bar"></div>
+            </div>
+            
+            <div class="step-indicator">
+                <div class="step completed" id="step-1">
+                    <div class="step-number">1</div>
+                    <div class="step-name">Datos Personales</div>
+                </div>
+                <div class="step active" id="step-2">
+                    <div class="step-number">2</div>
+                    <div class="step-name">Información del Inmueble</div>
+                </div>
+                <div class="step" id="step-3">
+                    <div class="step-number">3</div>
+                    <div class="step-name">Condiciones del Arriendo</div>
+                </div>
+                <div class="step" id="step-4">
+                    <div class="step-number">4</div>
+                    <div class="step-name">Garantías y Documentos</div>
+                </div>
+                <div class="step" id="step-5">
+                    <div class="step-number">5</div>
+                    <div class="step-name">Revisión Final</div>
+                </div>
+            </div>
+            
+            <div class="content-container">
+                <div class="form-container">
+                    <!-- Paso 1: Datos Personales -->
+                    <div class="step-content active" id="content-1">
+                        <h2>Datos Personales</h2>
+                        <p>Completa tu información personal y la del propietario (arrendador).</p>
+                        
+                        <div class="form-group">
+                            <label for="nombre-arrendatario" class="required">Nombre Completo del Arrendatario</label>
+                            <input type="text" id="nombre-arrendatario" placeholder="Ingresa tu nombre completo">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="rut-arrendatario" class="required">RUT del Arrendatario</label>
+                            <input type="text" id="rut-arrendatario" placeholder="Ej: 12.345.678-9">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="email-arrendatario" class="required">Correo Electrónico</label>
+                            <input type="email" id="email-arrendatario" placeholder="tucorreo@ejemplo.com">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="telefono-arrendatario" class="required">Teléfono de Contacto</label>
+                            <input type="tel" id="telefono-arrendatario" placeholder="+56 9 1234 5678">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="nombre-arrendador" class="required">Nombre del Arrendador (Propietario)</label>
+                            <input type="text" id="nombre-arrendador" placeholder="Nombre del propietario del inmueble">
+                        </div>
+                        
+                        <div class="tip-box">
+                            <strong>Consejo:</strong> Asegúrate de que los datos personales coincidan exactamente con los de tu cédula de identidad o documento de identificación oficial.
+                        </div>
+                    </div>
+                    
+                    <!-- Paso 2: Información del Inmueble -->
+                    <div class="step-content" id="content-2">
+                        <h2>Información del Inmueble</h2>
+                        <p>Proporciona los datos específicos del inmueble que vas a arrendar.</p>
+                        
+                        <div class="form-group">
+                            <label for="direccion" class="required">Dirección Completa del Inmueble</label>
+                            <input type="text" id="direccion" placeholder="Calle, número, departamento, comuna, ciudad">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="tipo-inmueble" class="required">Tipo de Inmueble</label>
+                            <select id="tipo-inmueble">
+                                <option value="">Selecciona una opción</option>
+                                <option value="casa">Casa</option>
+                                <option value="departamento">Departamento</option>
+                                <option value="oficina">Oficina</option>
+                                <option value="local">Local Comercial</option>
+                                <option value="otro">Otro</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="metros-cuadrados">Metros Cuadrados (m²)</label>
+                            <input type="number" id="metros-cuadrados" placeholder="Ej: 75">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Características del Inmueble</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="estacionamiento">
+                                    <label for="estacionamiento">Estacionamiento</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="bodega">
+                                    <label for="bodega">Bodega</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="amoblado">
+                                    <label for="amoblado">Amoblado</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="mascotas">
+                                    <label for="mascotas">Permite mascotas</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="tip-box">
+                            <strong>Importante:</strong> La dirección debe ser exacta y completa para evitar confusiones. Si el inmueble tiene número de departamento o block, inclúyelo.
+                        </div>
+                    </div>
+                    
+                    <!-- Paso 3: Condiciones del Arriendo -->
+                    <div class="step-content" id="content-3">
+                        <h2>Condiciones del Arriendo</h2>
+                        <p>Especifica los términos y condiciones del contrato de arriendo.</p>
+                        
+                        <div class="form-group">
+                            <label for="fecha-inicio" class="required">Fecha de Inicio del Contrato</label>
+                            <input type="date" id="fecha-inicio">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="duracion-contrato" class="required">Duración del Contrato (meses)</label>
+                            <select id="duracion-contrato">
+                                <option value="">Selecciona duración</option>
+                                <option value="6">6 meses</option>
+                                <option value="12">12 meses</option>
+                                <option value="24">24 meses</option>
+                                <option value="36">36 meses</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="renta-mensual" class="required">Renta Mensual ($)</label>
+                            <input type="number" id="renta-mensual" placeholder="Ej: 450000">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="dia-pago">Día de Pago Mensual</label>
+                            <select id="dia-pago">
+                                <option value="1">1° de cada mes</option>
+                                <option value="5" selected>5 de cada mes</option>
+                                <option value="10">10 de cada mes</option>
+                                <option value="15">15 de cada mes</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="gastos-comunes">¿Quién paga los gastos comunes?</label>
+                            <select id="gastos-comunes">
+                                <option value="arrendatario">Arrendatario</option>
+                                <option value="arrendador">Arrendador</option>
+                                <option value="compartidos">Compartidos</option>
+                            </select>
+                        </div>
+                        
+                        <div class="tip-box">
+                            <strong>Recuerda:</strong> La fecha de inicio del contrato marca el día desde el cual eres responsable del inmueble. Anota esta fecha en tu calendario.
+                        </div>
+                    </div>
+                    
+                    <!-- Paso 4: Garantías y Documentos -->
+                    <div class="step-content" id="content-4">
+                        <h2>Garantías y Documentos</h2>
+                        <p>Información sobre las garantías requeridas y documentos adjuntos.</p>
+                        
+                        <div class="form-group">
+                            <label for="tipo-garantia" class="required">Tipo de Garantía</label>
+                            <select id="tipo-garantia">
+                                <option value="">Selecciona una opción</option>
+                                <option value="aval">Aval Bancario</option>
+                                <option value="deposito">Depósito de Garantía</option>
+                                <option value="codeudor">Codeudor Solidario</option>
+                                <option value="seguro">Seguro de Cauciones</option>
+                            </select>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="monto-garantia">Monto de la Garantía ($)</label>
+                            <input type="number" id="monto-garantia" placeholder="Ej: 450000 (normalmente equivalente a 1 mes de renta)">
+                        </div>
+                        
+                        <div class="form-group">
+                            <label>Documentos a Adjuntar</label>
+                            <div class="checkbox-group">
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="documento-1">
+                                    <label for="documento-1">Copia de Cédula de Identidad</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="documento-2">
+                                    <label for="documento-2">Contrato de Trabajo o Boleta de Honorarios</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="documento-3">
+                                    <label for="documento-3">Certificado de Antecedentes</label>
+                                </div>
+                                <div class="checkbox-item">
+                                    <input type="checkbox" id="documento-4">
+                                    <label for="documento-4">Últimas 3 liquidaciones de sueldo</label>
+                                </div>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <label for="observaciones">Observaciones Adicionales</label>
+                            <textarea id="observaciones" rows="4" placeholder="Escribe aquí cualquier observación o condición adicional que deba considerarse..."></textarea>
+                        </div>
+                        
+                        <div class="tip-box">
+                            <strong>Nota:</strong> La garantía más común es el depósito equivalente a un mes de renta, que se devuelve al término del contrato si no hay daños en el inmueble.
+                        </div>
+                    </div>
+                    
+                    <!-- Paso 5: Revisión Final -->
+                    <div class="step-content" id="content-5">
+                        <h2>Revisión Final</h2>
+                        <p>Revisa cuidadosamente toda la información antes de finalizar.</p>
+                        
+                        <div class="summary">
+                            <h3>Resumen de tu Ficha de Arriendo</h3>
+                            <div id="summary-content">
+                                <!-- El resumen se llenará con JavaScript -->
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="confirmacion-datos">
+                                <label for="confirmacion-datos" class="required">Confirmo que toda la información proporcionada es correcta y verídica.</label>
+                            </div>
+                        </div>
+                        
+                        <div class="form-group">
+                            <div class="checkbox-item">
+                                <input type="checkbox" id="terminos-condiciones">
+                                <label for="terminos-condiciones" class="required">Acepto los términos y condiciones del contrato de arriendo.</label>
+                            </div>
+                        </div>
+                        
+                        <div class="warning-box">
+                            <strong>¡Atención!</strong> Una vez enviada la ficha, no podrás modificar la información. Asegúrate de que todos los datos sean correctos antes de proceder.
+                        </div>
+                    </div>
+                    
+                    <!-- Pantalla de Finalización -->
+                    <div class="completion-screen" id="completion-screen">
+                        <div class="completion-icon">✅</div>
+                        <h2>¡Ficha Completada Exitosamente!</h2>
+                        <p>Tu ficha de arriendo ha sido generada correctamente. Recibirás una copia en tu correo electrónico en los próximos minutos.</p>
+                        <p><strong>Próximos pasos:</strong></p>
+                        <ol style="text-align: left; max-width: 500px; margin: 20px auto;">
+                            <li>Revisa tu correo electrónico para confirmar la recepción</li>
+                            <li>Imprime la ficha y el contrato adjunto</li>
+                            <li>Coordina una reunión con el arrendador para firmar</li>
+                            <li>Realiza el pago de la garantía según lo acordado</li>
+                            <li>Conserva una copia firmada del contrato</li>
+                        </ol>
+                        <button class="btn btn-finish" id="btn-new-form" style="margin-top: 20px;">Crear Nueva Ficha</button>
+                    </div>
+                    
+                    <!-- Botones de Navegación -->
+                    <div class="navigation-buttons" id="navigation-buttons">
+                        <button class="btn btn-prev" id="btn-prev" disabled>Anterior</button>
+                        <button class="btn btn-next" id="btn-next">Siguiente</button>
+                    </div>
+                </div>
+                
+                <div class="sidebar">
+                    <h3>Documentos Requeridos</h3>
+                    <p>Para completar el proceso, necesitarás tener a mano:</p>
+                    <ul class="document-list">
+                        <li>Cédula de Identidad o Pasaporte</li>
+                        <li>Certificado de Antecedentes</li>
+                        <li>Últimas 3 liquidaciones de sueldo</li>
+                        <li>Contrato de trabajo vigente</li>
+                        <li>Información del aval o codeudor (si aplica)</li>
+                        <li>Comprobante de ingresos (boletas de honorarios)</li>
+                    </ul>
+                    
+                    <div class="warning-box">
+                        <strong>Recuerda:</strong> Todos los documentos deben estar vigentes y ser legibles. Preferiblemente en formato PDF.
+                    </div>
+                    
+                    <h3 style="margin-top: 30px;">Progreso Actual</h3>
+                    <div style="text-align: center;">
+                        <div style="font-size: 2rem; font-weight: bold; color: var(--secondary-color);" id="progress-percentage">10%</div>
+                        <div>Completado</div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script>
+        // Variables globales
+        let currentStep = 1;
+        const totalSteps = 5;
+        
+        // Elementos DOM
+        const progressBar = document.getElementById('progress-bar');
+        const progressPercentage = document.getElementById('progress-percentage');
+        const btnPrev = document.getElementById('btn-prev');
+        const btnNext = document.getElementById('btn-next');
+        const btnNewForm = document.getElementById('btn-new-form');
+        const navigationButtons = document.getElementById('navigation-buttons');
+        const completionScreen = document.getElementById('completion-screen');
+        const summaryContent = document.getElementById('summary-content');
+        
+        // Inicializar
+        document.addEventListener('DOMContentLoaded', function() {
+            updateProgress();
+            setupEventListeners();
+            updateStepIndicators();
+        });
+        
+        // Configurar event listeners
+        function setupEventListeners() {
+            btnPrev.addEventListener('click', goToPreviousStep);
+            btnNext.addEventListener('click', goToNextStep);
+            btnNewForm.addEventListener('click', resetForm);
+            
+            // Validación en tiempo real para algunos campos
+            document.getElementById('rut-arrendatario').addEventListener('blur', validateRUT);
+            document.getElementById('email-arrendatario').addEventListener('blur', validateEmail);
+            document.getElementById('renta-mensual').addEventListener('blur', updateGarantia);
+        }
+        
+        // Navegación entre pasos
+        function goToNextStep() {
+            if (currentStep < totalSteps) {
+                // Validar paso actual antes de avanzar
+                if (validateCurrentStep()) {
+                    document.getElementById(`content-${currentStep}`).classList.remove('active');
+                    document.getElementById(`step-${currentStep}`).classList.remove('active');
+                    
+                    currentStep++;
+                    
+                    // Si estamos en el último paso, cambiar el botón a "Finalizar"
+                    if (currentStep === totalSteps) {
+                        btnNext.textContent = 'Finalizar';
+                        btnNext.classList.add('btn-finish');
+                        btnNext.classList.remove('btn-next');
+                    }
+                    
+                    updateStepIndicators();
+                    updateProgress();
+                    
+                    document.getElementById(`content-${currentStep}`).classList.add('active');
+                    document.getElementById(`step-${currentStep}`).classList.add('active');
+                    
+                    // Habilitar botón anterior
+                    btnPrev.disabled = false;
+                    
+                    // Si estamos en el paso de revisión, generar resumen
+                    if (currentStep === totalSteps) {
+                        generateSummary();
+                    }
+                }
+            } else {
+                // Estamos en el último paso, finalizar
+                finalizeForm();
+            }
+        }
+        
+        function goToPreviousStep() {
+            if (currentStep > 1) {
+                document.getElementById(`content-${currentStep}`).classList.remove('active');
+                document.getElementById(`step-${currentStep}`).classList.remove('active');
+                
+                currentStep--;
+                
+                // Si volvemos desde el último paso, cambiar botón a "Siguiente"
+                if (currentStep === totalSteps - 1) {
+                    btnNext.textContent = 'Siguiente';
+                    btnNext.classList.remove('btn-finish');
+                    btnNext.classList.add('btn-next');
+                }
+                
+                updateStepIndicators();
+                updateProgress();
+                
+                document.getElementById(`content-${currentStep}`).classList.add('active');
+                document.getElementById(`step-${currentStep}`).classList.add('active');
+                
+                // Deshabilitar botón anterior si estamos en el primer paso
+                if (currentStep === 1) {
+                    btnPrev.disabled = true;
+                }
+            }
+        }
+        
+        // Actualizar indicadores de paso
+        function updateStepIndicators() {
+            // Marcar pasos anteriores como completados
+            for (let i = 1; i <= totalSteps; i++) {
+                const stepElement = document.getElementById(`step-${i}`);
+                if (i < currentStep) {
+                    stepElement.classList.add('completed');
+                    stepElement.classList.remove('active');
+                } else if (i === currentStep) {
+                    stepElement.classList.add('active');
+                    stepElement.classList.remove('completed');
+                } else {
+                    stepElement.classList.remove('active', 'completed');
+                }
+            }
+        }
+        
+        // Actualizar barra de progreso
+        function updateProgress() {
+            const percentage = ((currentStep - 1) / totalSteps) * 100;
+            progressBar.style.width = `${percentage}%`;
+            progressPercentage.textContent = `${Math.round(percentage)}%`;
+        }
+        
+        // Validar el paso actual
+        function validateCurrentStep() {
+            let isValid = true;
+            
+            switch(currentStep) {
+                case 1:
+                    // Validar datos personales
+                    const requiredFields = [
+                        'nombre-arrendatario',
+                        'rut-arrendatario',
+                        'email-arrendatario',
+                        'telefono-arrendatario',
+                        'nombre-arrendador'
+                    ];
+                    
+                    requiredFields.forEach(fieldId => {
+                        const field = document.getElementById(fieldId);
+                        if (!field.value.trim()) {
+                            isValid = false;
+                            highlightInvalidField(field);
+                        } else {
+                            removeHighlight(field);
+                        }
+                    });
+                    
+                    if (!isValid) {
+                        alert('Por favor, completa todos los campos obligatorios marcados con *');
+                    }
+                    break;
+                    
+                case 2:
+                    // Validar información del inmueble
+                    const direccion = document.getElementById('direccion');
+                    const tipoInmueble = document.getElementById('tipo-inmueble');
+                    
+                    if (!direccion.value.trim() || !tipoInmueble.value) {
+                        isValid = false;
+                        if (!direccion.value.trim()) highlightInvalidField(direccion);
+                        if (!tipoInmueble.value) highlightInvalidField(tipoInmueble);
+                        alert('Por favor, completa la dirección y selecciona el tipo de inmueble');
+                    }
+                    break;
+                    
+                case 3:
+                    // Validar condiciones del arriendo
+                    const fechaInicio = document.getElementById('fecha-inicio');
+                    const duracionContrato = document.getElementById('duracion-contrato');
+                    const rentaMensual = document.getElementById('renta-mensual');
+                    
+                    if (!fechaInicio.value || !duracionContrato.value || !rentaMensual.value) {
+                        isValid = false;
+                        if (!fechaInicio.value) highlightInvalidField(fechaInicio);
+                        if (!duracionContrato.value) highlightInvalidField(duracionContrato);
+                        if (!rentaMensual.value) highlightInvalidField(rentaMensual);
+                        alert('Por favor, completa la fecha de inicio, duración del contrato y renta mensual');
+                    }
+                    break;
+                    
+                case 4:
+                    // Validar garantías
+                    const tipoGarantia = document.getElementById('tipo-garantia');
+                    if (!tipoGarantia.value) {
+                        isValid = false;
+                        highlightInvalidField(tipoGarantia);
+                        alert('Por favor, selecciona un tipo de garantía');
+                    }
+                    break;
+            }
+            
+            return isValid;
+        }
+        
+        // Resaltar campo inválido
+        function highlightInvalidField(field) {
+            field.style.borderColor = 'var(--accent-color)';
+            field.style.backgroundColor = '#fff0f0';
+        }
+        
+        // Quitar resaltado de campo
+        function removeHighlight(field) {
+            field.style.borderColor = '#ddd';
+            field.style.backgroundColor = '';
+        }
+        
+        // Validar formato de RUT (simple)
+        function validateRUT() {
+            const rutField = document.getElementById('rut-arrendatario');
+            const rut = rutField.value.trim();
+            // Expresión regular simple para formato común de RUT chileno
+            const rutRegex = /^(\d{1,3}(\.\d{3})*|\d{7,8})-[\dkK]$/;
+            
+            if (rut && !rutRegex.test(rut)) {
+                highlightInvalidField(rutField);
+                alert('Por favor, ingresa un RUT válido en formato: 12.345.678-9');
+                return false;
+            } else {
+                removeHighlight(rutField);
+                return true;
+            }
+        }
+        
+        // Validar formato de email
+        function validateEmail() {
+            const emailField = document.getElementById('email-arrendatario');
+            const email = emailField.value.trim();
+            const emailRegex = /^[^\s@]+@[^\s@]+\.[^\s@]+$/;
+            
+            if (email && !emailRegex.test(email)) {
+                highlightInvalidField(emailField);
+                alert('Por favor, ingresa un correo electrónico válido');
+                return false;
+            } else {
+                removeHighlight(emailField);
+                return true;
+            }
+        }
+        
+        // Actualizar monto de garantía según renta
+        function updateGarantia() {
+            const renta = document.getElementById('renta-mensual').value;
+            const garantiaField = document.getElementById('monto-garantia');
+            
+            if (renta && !garantiaField.value) {
+                garantiaField.value = renta; // Por defecto, un mes de renta
+            }
+        }
+        
+        // Generar resumen para el paso final
+        function generateSummary() {
+            const fields = [
+                {id: 'nombre-arrendatario', label: 'Arrendatario'},
+                {id: 'rut-arrendatario', label: 'RUT Arrendatario'},
+                {id: 'email-arrendatario', label: 'Email'},
+                {id: 'telefono-arrendatario', label: 'Teléfono'},
+                {id: 'nombre-arrendador', label: 'Arrendador'},
+                {id: 'direccion', label: 'Dirección del Inmueble'},
+                {id: 'tipo-inmueble', label: 'Tipo de Inmueble'},
+                {id: 'metros-cuadrados', label: 'Metros Cuadrados'},
+                {id: 'fecha-inicio', label: 'Fecha de Inicio'},
+                {id: 'duracion-contrato', label: 'Duración del Contrato (meses)'},
+                {id: 'renta-mensual', label: 'Renta Mensual'},
+                {id: 'dia-pago', label: 'Día de Pago'},
+                {id: 'gastos-comunes', label: 'Pago de Gastos Comunes'},
+                {id: 'tipo-garantia', label: 'Tipo de Garantía'},
+                {id: 'monto-garantia', label: 'Monto de Garantía'},
+                {id: 'observaciones', label: 'Observaciones'}
+            ];
+            
+            let summaryHTML = '<div style="display: grid; grid-template-columns: 1fr 1fr; gap: 15px;">';
+            
+            fields.forEach(field => {
+                const element = document.getElementById(field.id);
+                let value = '';
+                
+                if (element.type === 'checkbox') {
+                    // Para checkboxes, mostrar estado
+                    value = element.checked ? 'Sí' : 'No';
+                } else if (element.tagName === 'SELECT') {
+                    // Para selects, mostrar texto de la opción seleccionada
+                    const selectedOption = element.options[element.selectedIndex];
+                    value = selectedOption ? selectedOption.text : '';
+                } else {
+                    value = element.value || 'No especificado';
+                }
+                
+                summaryHTML += `
+                    <div style="padding: 8px; background-color: #f8f9fa; border-radius: 4px;">
+                        <strong>${field.label}:</strong><br>
+                        ${value}
+                    </div>
+                `;
+            });
+            
+            // Características del inmueble
+            const caracteristicas = [];
+            if (document.getElementById('estacionamiento').checked) caracteristicas.push('Estacionamiento');
+            if (document.getElementById('bodega').checked) caracteristicas.push('Bodega');
+            if (document.getElementById('amoblado').checked) caracteristicas.push('Amoblado');
+            if (document.getElementById('mascotas').checked) caracteristicas.push('Permite mascotas');
+            
+            summaryHTML += `
+                <div style="padding: 8px; background-color: #f8f9fa; border-radius: 4px; grid-column: span 2;">
+                    <strong>Características del Inmueble:</strong><br>
+                    ${caracteristicas.length > 0 ? caracteristicas.join(', ') : 'Ninguna seleccionada'}
+                </div>
+            `;
+            
+            summaryHTML += '</div>';
+            summaryContent.innerHTML = summaryHTML;
+        }
+        
+        // Finalizar formulario
+        function finalizeForm() {
+            // Validar paso final
+            const confirmacionDatos = document.getElementById('confirmacion-datos');
+            const terminosCondiciones = document.getElementById('terminos-condiciones');
+            
+            if (!confirmacionDatos.checked || !terminosCondiciones.checked) {
+                alert('Debes confirmar que los datos son correctos y aceptar los términos y condiciones para finalizar.');
+                return;
+            }
+            
+            // Ocultar contenido del paso 5 y botones de navegación
+            document.getElementById('content-5').classList.remove('active');
+            navigationButtons.style.display = 'none';
+            
+            // Mostrar pantalla de finalización
+            completionScreen.classList.add('active');
+            
+            // Marcar todos los pasos como completados
+            for (let i = 1; i <= totalSteps; i++) {
+                document.getElementById(`step-${i}`).classList.add('completed');
+                document.getElementById(`step-${i}`).classList.remove('active');
+            }
+            
+            // Actualizar barra de progreso al 100%
+            progressBar.style.width = '100%';
+            progressPercentage.textContent = '100%';
+        }
+        
+        // Reiniciar formulario
+        function resetForm() {
+            // Restablecer todos los campos del formulario
+            const formElements = document.querySelectorAll('input, select, textarea');
+            formElements.forEach(element => {
+                if (element.type === 'checkbox') {
+                    element.checked = false;
+                } else if (element.type === 'radio') {
+                    element.checked = false;
+                } else if (element.tagName === 'SELECT') {
+                    element.selectedIndex = 0;
+                } else {
+                    element.value = '';
+                }
+                
+                removeHighlight(element);
+            });
+            
+            // Restablecer variables
+            currentStep = 1;
+            
+            // Ocultar pantalla de finalización
+            completionScreen.classList.remove('active');
+            
+            // Mostrar primer paso
+            document.getElementById(`content-${currentStep}`).classList.add('active');
+            
+            // Restablecer botones de navegación
+            navigationButtons.style.display = 'flex';
+            btnPrev.disabled = true;
+            btnNext.textContent = 'Siguiente';
+            btnNext.classList.remove('btn-finish');
+            btnNext.classList.add('btn-next');
+            
+            // Restablecer indicadores de paso
+            updateStepIndicators();
+            updateProgress();
+        }
+    </script>
+</body>
+</html>
